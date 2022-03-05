@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30a9a9c4122990141a35c582047dc897, type: 3}
+  m_Name: Level 5
+  m_EditorClassIdentifier: 
+  width: 7
+  height: 8
+  boardLayout:
+  - x: 2
+    y: 4
+    tileKind: 1
+  - x: 3
+    y: 4
+    tileKind: 1
+  - x: 4
+    y: 4
+    tileKind: 1
+  - x: 2
+    y: 3
+    tileKind: 1
+  - x: 3
+    y: 3
+    tileKind: 1
+  - x: 4
+    y: 3
+    tileKind: 1
+  - x: 0
+    y: 0
+    tileKind: 1
+  - x: 6
+    y: 0
+    tileKind: 1
+  - x: 6
+    y: 7
+    tileKind: 1
+  - x: 0
+    y: 7
+    tileKind: 1
+  dots:
+  - {fileID: 7275562178187201295, guid: 23bce9f1bccbc774f94ef1a6060da782, type: 3}
+  - {fileID: 8567683561724440015, guid: 9bf0bf53327f75646a9f04d681fbeaa3, type: 3}
+  - {fileID: 2423542469519297626, guid: 89d77a28c7537704a8c7bf68dbd67715, type: 3}
+  - {fileID: 5429796605403366865, guid: 644b44a53d9cc9143b33279e4c6911b4, type: 3}
+  - {fileID: 6484442866627382190, guid: 7788b76519d536c4bb08cb83c840c1b6, type: 3}
+  - {fileID: 817385847753987911, guid: fd5aab9cb9397254982bec8d960646c9, type: 3}
+  scoreGoals: d0070000be0a0000ac0d0000
+  endGameRequirments:
+    gameType: 0
+    counterValue: 26
+  levelGoals:
+  - numberNeeded: 20
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: ffc3061db0ffa1e48a05a26791793cf0, type: 3}
+    matchValue: White Dot
+  - numberNeeded: 25
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: bd3d0ac224fabcd45acef879a8524e23, type: 3}
+    matchValue: Orange Dot
+  - numberNeeded: 20
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: 60e5b66bebb8e9942ae9507b99e2375e, type: 3}
+    matchValue: Purple Dot

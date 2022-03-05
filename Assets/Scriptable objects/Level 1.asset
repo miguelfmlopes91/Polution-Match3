@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30a9a9c4122990141a35c582047dc897, type: 3}
+  m_Name: Level 1
+  m_EditorClassIdentifier: 
+  width: 7
+  height: 10
+  boardLayout:
+  - x: 0
+    y: 0
+    tileKind: 1
+  - x: 6
+    y: 9
+    tileKind: 1
+  - x: 6
+    y: 0
+    tileKind: 1
+  - x: 0
+    y: 9
+    tileKind: 1
+  - x: 2
+    y: 2
+    tileKind: 0
+  - x: 3
+    y: 2
+    tileKind: 0
+  - x: 4
+    y: 2
+    tileKind: 0
+  - x: 2
+    y: 3
+    tileKind: 0
+  - x: 3
+    y: 3
+    tileKind: 0
+  - x: 4
+    y: 3
+    tileKind: 0
+  - x: 2
+    y: 4
+    tileKind: 0
+  - x: 3
+    y: 4
+    tileKind: 0
+  - x: 4
+    y: 4
+    tileKind: 0
+  - x: 2
+    y: 5
+    tileKind: 0
+  - x: 3
+    y: 5
+    tileKind: 0
+  - x: 4
+    y: 5
+    tileKind: 0
+  - x: 2
+    y: 6
+    tileKind: 0
+  - x: 3
+    y: 6
+    tileKind: 0
+  - x: 4
+    y: 6
+    tileKind: 0
+  - x: 2
+    y: 7
+    tileKind: 0
+  - x: 3
+    y: 7
+    tileKind: 0
+  - x: 4
+    y: 7
+    tileKind: 0
+  dots:
+  - {fileID: 2423542469519297626, guid: 89d77a28c7537704a8c7bf68dbd67715, type: 3}
+  - {fileID: 6484442866627382190, guid: 7788b76519d536c4bb08cb83c840c1b6, type: 3}
+  - {fileID: 817385847753987911, guid: fd5aab9cb9397254982bec8d960646c9, type: 3}
+  - {fileID: 6632146090418453996, guid: 2b035fd286fb512459146665db4a5425, type: 3}
+  - {fileID: 5429796605403366865, guid: 644b44a53d9cc9143b33279e4c6911b4, type: 3}
+  - {fileID: 8567683561724440015, guid: 9bf0bf53327f75646a9f04d681fbeaa3, type: 3}
+  - {fileID: 7275562178187201295, guid: 23bce9f1bccbc774f94ef1a6060da782, type: 3}
+  scoreGoals: e2040000d6060000ca080000
+  endGameRequirments:
+    gameType: 0
+    counterValue: 30
+  levelGoals:
+  - numberNeeded: 15
+    numberCollected: 16
+    goalSprite: {fileID: 21300000, guid: ffc3061db0ffa1e48a05a26791793cf0, type: 3}
+    matchValue: White Dot
+  - numberNeeded: 15
+    numberCollected: 13
+    goalSprite: {fileID: 21300000, guid: 3c758524d42fc684a938581d2735ab24, type: 3}
+    matchValue: Blue Dark Dot
+  - numberNeeded: 18
+    numberCollected: 16
+    goalSprite: {fileID: 21300000, guid: addeadf756d40a94693adb2c975d7d2d, type: 3}
+    matchValue: Breakable
