@@ -83,26 +83,25 @@ MonoBehaviour:
     tileKind: 0
   dots:
   - {fileID: 2423542469519297626, guid: 89d77a28c7537704a8c7bf68dbd67715, type: 3}
-  - {fileID: 6484442866627382190, guid: 7788b76519d536c4bb08cb83c840c1b6, type: 3}
   - {fileID: 817385847753987911, guid: fd5aab9cb9397254982bec8d960646c9, type: 3}
   - {fileID: 6632146090418453996, guid: 2b035fd286fb512459146665db4a5425, type: 3}
   - {fileID: 5429796605403366865, guid: 644b44a53d9cc9143b33279e4c6911b4, type: 3}
-  - {fileID: 8567683561724440015, guid: 9bf0bf53327f75646a9f04d681fbeaa3, type: 3}
-  - {fileID: 7275562178187201295, guid: 23bce9f1bccbc774f94ef1a6060da782, type: 3}
   scoreGoals: e2040000d6060000ca080000
   endGameRequirments:
     gameType: 0
     counterValue: 30
   levelGoals:
   - numberNeeded: 15
-    numberCollected: 16
-    goalSprite: {fileID: 21300000, guid: ffc3061db0ffa1e48a05a26791793cf0, type: 3}
-    matchValue: White Dot
+    numberCollected: 0
+    goalSprite: {fileID: -5682091620870042725, guid: 164d01eb134422f47b0d9bdc00c45430,
+      type: 3}
+    matchValue: Black Dot
   - numberNeeded: 15
-    numberCollected: 13
-    goalSprite: {fileID: 21300000, guid: 3c758524d42fc684a938581d2735ab24, type: 3}
-    matchValue: Blue Dark Dot
+    numberCollected: 0
+    goalSprite: {fileID: 744376705736303324, guid: 164d01eb134422f47b0d9bdc00c45430,
+      type: 3}
+    matchValue: Orange Dot
   - numberNeeded: 18
-    numberCollected: 16
+    numberCollected: 0
     goalSprite: {fileID: 21300000, guid: addeadf756d40a94693adb2c975d7d2d, type: 3}
     matchValue: Breakable

@@ -46,11 +46,8 @@ MonoBehaviour:
     y: 7
     tileKind: 1
   dots:
-  - {fileID: 7275562178187201295, guid: 23bce9f1bccbc774f94ef1a6060da782, type: 3}
-  - {fileID: 8567683561724440015, guid: 9bf0bf53327f75646a9f04d681fbeaa3, type: 3}
   - {fileID: 2423542469519297626, guid: 89d77a28c7537704a8c7bf68dbd67715, type: 3}
   - {fileID: 5429796605403366865, guid: 644b44a53d9cc9143b33279e4c6911b4, type: 3}
-  - {fileID: 6484442866627382190, guid: 7788b76519d536c4bb08cb83c840c1b6, type: 3}
   - {fileID: 817385847753987911, guid: fd5aab9cb9397254982bec8d960646c9, type: 3}
   scoreGoals: d0070000be0a0000ac0d0000
   endGameRequirments:
