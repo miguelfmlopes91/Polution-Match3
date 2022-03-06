@@ -104,7 +104,6 @@ public class Dot : MonoBehaviour
         {
             yield return new WaitForSeconds(SwapAnimationTime);
         }
-        if (otherDot == null) yield break;
         if (isColorBomb)
         {
             //This Piece is a color bomb, and the other is the color to destroy
@@ -121,6 +120,7 @@ public class Dot : MonoBehaviour
 
         yield return new WaitUntil(() => board.currentState != Gamestate.CheckMatches);
         
+        if (otherDot == null) yield break;
         if(!isMatched && !otherDot.GetComponent<Dot>().isMatched)
         {
             otherDot.GetComponent<Dot>().row = row;
@@ -140,6 +140,7 @@ public class Dot : MonoBehaviour
     
     private void OnMouseDown()
     {
+        if (board.currentState != Gamestate.Move) return;
         //Destroy the hint.
         if(hintManager != null)
         {

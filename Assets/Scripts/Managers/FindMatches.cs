@@ -136,10 +136,6 @@ public class FindMatches : MonoBehaviour
                 }
             }
         }
-
-        board.currentState = Gamestate.MatchesChecked;
-        Debug.Log($"Matches checked");
-
     }
 
     private IEnumerable<GameObject> GetAdjacentPieces(int column, int row)

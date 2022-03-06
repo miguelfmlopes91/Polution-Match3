@@ -67,7 +67,7 @@ public class Board : MonoBehaviour
     private ScoreManager scoreManager;
     private SoundManager soundManager;
     private GoalManager goalManager;
-    public float refillDelay = 0.5f;
+    private const float RefillDelay = 0.6f;
     public int[] scoreGoals;
 
 
@@ -118,11 +118,13 @@ public class Board : MonoBehaviour
         if (currentState == Gamestate.CheckMatches)
         {
             findMatches.FindAllMatches();
+            currentState = Gamestate.MatchesChecked;
         }
 
-        if (currentState == Gamestate.MatchesChecked)
+        if (currentState == Gamestate.MatchesChecked && findMatches.currentMatches.Count > 0)
         {
             DestroyMatches();
+            StartCoroutine(FillBoardCo());
             currentState = Gamestate.Wait;
         }
 
@@ -391,8 +393,6 @@ public class Board : MonoBehaviour
                 }
             }
         }
-        findMatches.currentMatches.Clear();
-        StartCoroutine(DecreaseRowCo());
     }
 
     private IEnumerator DecreaseRowCo()
@@ -421,8 +421,7 @@ public class Board : MonoBehaviour
                 }
             }
         }
-        yield return new WaitForSeconds(refillDelay * 0.5f);
-        StartCoroutine(FillBoardCo());
+        yield return new WaitForSeconds(RefillDelay);
     }
     
     private void RefillBoard()
@@ -443,8 +442,7 @@ public class Board : MonoBehaviour
                         dotsToUse = Random.Range(0, dots.Length);
                     }
 
-                    maxInterations = 0;
-                    GameObject piece = Instantiate(dots[dotsToUse], tempPosition, Quaternion.identity);
+                    var piece = Instantiate(dots[dotsToUse], tempPosition, Quaternion.identity);
                     allDots[i, j] = piece;
                     piece.GetComponent<Dot>().row = j;
                     piece.GetComponent<Dot>().column = i;
@@ -453,48 +451,70 @@ public class Board : MonoBehaviour
         }
     }
 
-    private bool MatchesOnBoard()
+    private bool MatchesInBoard()
     {
-        for (int i = 0; i < width; i ++ )
+        for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                if(allDots[i, j] != null)
-                {
-                    if(allDots[i, j].GetComponent<Dot>().isMatched)
-                    {
-                        return true;
-                    }
-                }
+                var dot = allDots[i, j];
+                if (dot != null && dot.GetComponent<Dot>().isMatched)
+                    return true;
             }
         }
-        
-        
+        return false;
+    }
+
+    private bool CheckPiecesNull()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                var dot = allDots[i, j];
+                if (dot == null && !blankSpaces[i,j])
+                    return true;
+            }
+        }
         return false;
     }
     
     private IEnumerator FillBoardCo()
     {
+        yield return DecreaseRowCo();
         RefillBoard();
-        yield return new WaitForSeconds(refillDelay);
-        
-        while (MatchesOnBoard())
+        yield return new WaitForSeconds(RefillDelay);
+        findMatches.currentMatches.Clear();
+        findMatches.FindAllMatches();
+        do
         {
             streakValue ++;
-            DestroyMatches();
-            yield return new WaitForSeconds(2 * refillDelay);
-        }
+            if (findMatches.currentMatches.Count > 0)
+            {
+                DestroyMatches();
+                yield return DecreaseRowCo();
+                RefillBoard();
+                yield return new WaitForSeconds(RefillDelay);
+                findMatches.currentMatches.Clear();
+                findMatches.FindAllMatches();
+            }
+           
+        } while (MatchesInBoard());
 
+        if (CheckPiecesNull())
+        {
+            Debug.Log("OH DIABO");
+        }
+        
+        
         findMatches.currentMatches.Clear();
         currentDot = null;
         
-
         if (IsDeadlocked())
         {
             ShuffleBoard();
-            Debug.Log("DeadLocked ! ! !");
         }
-        yield return new WaitForSeconds(refillDelay);
+        yield return new WaitForSeconds(RefillDelay);
         currentState = Gamestate.Move;
         streakValue = 1;
     }
@@ -568,7 +588,6 @@ public class Board : MonoBehaviour
 
     private bool IsDeadlocked()
     {
-        
         for(int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j ++)
