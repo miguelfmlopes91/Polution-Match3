@@ -13,19 +13,10 @@ public class BackgroundManager : MonoBehaviour
     public Sprite[] Sprites;
 
     public int x;
-
-
-
-
+    
     void Start()
     {
         x = Random.Range(0, 5);
         backGround.sprite = Sprites[x];
-    }
-
-   
-    void Update()
-    {
-        
     }
 }

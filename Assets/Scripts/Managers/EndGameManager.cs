@@ -33,8 +33,8 @@ public class EndGameManager : MonoBehaviour
     private ScoreManager scoreManager;
 
     bool finished = false;
-    
-    void Start()
+
+    private void Start()
     {
         scoreManager = FindObjectOfType<ScoreManager>();
         board = FindObjectOfType<Board>();
@@ -42,8 +42,7 @@ public class EndGameManager : MonoBehaviour
         SetupGame();  
     }
 
-   
-    void SetGameType()
+    private void SetGameType()
     {
         if(board.world != null)
         {
@@ -60,10 +59,8 @@ public class EndGameManager : MonoBehaviour
             
         }
     }
-    
-    
-    
-    void SetupGame()
+
+    private void SetupGame()
     {
         finished = false;
         currentCounterValue = requirements.counterValue;
@@ -83,7 +80,6 @@ public class EndGameManager : MonoBehaviour
     
     
     }
-    
     
     public void DecreaseCounterValue()
     {
@@ -116,7 +112,7 @@ public class EndGameManager : MonoBehaviour
         finished = true;
     }
 
-    public void LoseGame()
+    private void LoseGame()
     {
         tryAgainPanel.SetActive(true);
         board.currentState = Gamestate.lose;
@@ -126,7 +122,8 @@ public class EndGameManager : MonoBehaviour
         FadePanelController fade = FindObjectOfType<FadePanelController>();
         fade.GameOver();
     }
-    void Update()
+
+    private void Update()
     {
         if(requirements.gameType == GameType.Time && currentCounterValue > 0)
         {

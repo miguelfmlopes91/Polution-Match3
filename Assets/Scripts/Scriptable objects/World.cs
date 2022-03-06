@@ -7,5 +7,4 @@ using UnityEngine;
 public class World : ScriptableObject
 {
     public Level[] levels;
-  
 }

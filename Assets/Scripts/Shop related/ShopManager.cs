@@ -13,9 +13,8 @@ public class ShopManager : MonoBehaviour
 
     public Text decreaseTimerCostText;
     public GameObject decreaseTimerButton;
-
-
-    void Start()
+    
+    private void Start()
     {
 
         moneyManager = FindObjectOfType<MoneyManager>();
@@ -33,15 +32,7 @@ public class ShopManager : MonoBehaviour
             decreaseTimerCostText.text = "$" + timerUpgradeCost[GameData.gameData.saveData.purchasedTimeUpgrades].ToString();
         }
     }
-
-  
-    void Update()
-    {
-        
-    }
-
-
-
+    
     public void Buy1Heart()
     {
         HeartManager heartManager = FindObjectOfType<HeartManager>();
@@ -58,8 +49,7 @@ public class ShopManager : MonoBehaviour
 
 
     }
-
-
+    
     public void BuyMaxHearts()
     {
 
@@ -96,6 +86,4 @@ public class ShopManager : MonoBehaviour
 
 
     }
-
-
 }

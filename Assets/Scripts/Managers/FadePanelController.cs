@@ -7,6 +7,8 @@ public class FadePanelController : MonoBehaviour
 
     public Animator panelAnim;
     public Animator gameInfoAnim;
+    private static readonly int Out = Animator.StringToHash("Out");
+    private static readonly int Property = Animator.StringToHash("Game Over");
 
 
     public void OK()
@@ -23,14 +25,14 @@ public class FadePanelController : MonoBehaviour
     
     public void GameOver()
     {
-        panelAnim.SetBool("Out", false);
-        panelAnim.SetBool("Game Over", true);
+        panelAnim.SetBool(Out, false);
+        panelAnim.SetBool(Property, true);
     }
-    IEnumerator GameStartCo()
+
+    private static IEnumerator GameStartCo()
     {
         yield return new WaitForSeconds(1f);
         Board board = FindObjectOfType<Board>();
         board.currentState = Gamestate.move;
     }
-
 }
