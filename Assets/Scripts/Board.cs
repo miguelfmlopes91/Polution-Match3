@@ -615,7 +615,6 @@ public class Board : MonoBehaviour
                     }
                     //Make a container for the piece.
                     Dot piece = newBoard[pieceToUse].GetComponent<Dot>();
-                    maxIterations = 0;
                     piece.column = i;
                     //Assign the row to the piece.
                     piece.row = j;
