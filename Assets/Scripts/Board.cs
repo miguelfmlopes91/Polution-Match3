@@ -85,7 +85,8 @@ public class Board : MonoBehaviour
             
         }
     }
-    void Start()
+    
+    private void Start()
     {
         goalManager = FindObjectOfType<GoalManager>();
         soundManager = FindObjectOfType<SoundManager>();
@@ -99,9 +100,8 @@ public class Board : MonoBehaviour
 
         FindObjectOfType<UiManager>().UpdateLevelText(level);
     }
-
     
-    public void GenerateBlankSpaces()
+    private void GenerateBlankSpaces()
     {
         for(int i = 0; i < boardLayout.Length; i++)
         {
@@ -111,9 +111,8 @@ public class Board : MonoBehaviour
             }
         }
     }
-    
 
-    public void GenerateBreakableTiles()
+    private void GenerateBreakableTiles()
     {
         //Look at all the tiles in the layout
         for (int i = 0; i < boardLayout.Length; i ++)
@@ -129,6 +128,7 @@ public class Board : MonoBehaviour
             }
         }
     }
+    
     private void SetUp()
     {
         GenerateBlankSpaces();
@@ -175,7 +175,7 @@ public class Board : MonoBehaviour
         {
             if(allDots[column - 1, row] != null && allDots[column - 2, row] != null)
             {
-                if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)
+                if (allDots[column - 1, row].CompareTag(piece.tag) && allDots[column - 2, row].CompareTag(piece.tag))
                 {
                     return true;
                 }
@@ -183,44 +183,34 @@ public class Board : MonoBehaviour
           
             if(allDots[column, row - 1] != null && allDots[column, row - 2] != null)
             {
-                if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag)
+                if (allDots[column, row - 1].CompareTag(piece.tag) && allDots[column, row - 2].CompareTag(piece.tag))
                 {
                     return true;
                 }
             }
-           
-
         }else if(column <= 1 || row <= 1)
         {
             if(row > 1)
             {
                 if(allDots[column, row - 1] != null && allDots[column, row - 2] != null)
                 {
-                    if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag)
+                    if (allDots[column, row - 1].CompareTag(piece.tag) && allDots[column, row - 2].CompareTag(piece.tag))
                     {
                         return true;
                     }
                 }
-               
-            
             }
             if (column > 1)
             {
                 if(allDots[column - 1, row] != null && allDots[column - 2, row] != null)
                 {
-                    if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)
+                    if (allDots[column - 1, row].CompareTag(piece.tag) && allDots[column - 2, row].CompareTag(piece.tag))
                     {
                         return true;
                     }
                 }
-                
             }
-            
-
         }
-        
-
-
         return false;
     }
 
@@ -249,7 +239,6 @@ public class Board : MonoBehaviour
         return (numberVertical == 5 || numberHorizontal == 5);
 
     }
-    
     
     private void CheckToMakeBombs()
     {
@@ -382,12 +371,12 @@ public class Board : MonoBehaviour
             }
         }
         findMatches.currentMatches.Clear();
-        StartCoroutine(DecreaseRowCo2());
+        StartCoroutine(DecreaseRowCo());
     
     
     }
 
-    private IEnumerator DecreaseRowCo2()
+    private IEnumerator DecreaseRowCo()
     {
         for (int i = 0; i < width; i++)
         {
@@ -417,32 +406,6 @@ public class Board : MonoBehaviour
         StartCoroutine(FillBoardCo());
     }
     
-    private IEnumerator DecreaseRowCo()
-    {
-        int nullCount = 0;
-        for(int i = 0; i < width; i++)
-        {
-            for(int j = 0; j < height; j ++ )
-            {
-                if(allDots[i, j] == null)
-                {
-                    nullCount++;
-                }else if(nullCount > 0) 
-                {
-                    allDots[i, j].GetComponent<Dot>().row -= nullCount;
-                    allDots[i, j] = null;
-                }
-            }
-            nullCount = 0;
-        }
-        
-        
-        
-        
-        yield return new WaitForSeconds(refillDelay * 0.5f);
-        StartCoroutine(FillBoardCo());
-    }
-
     private void RefillBoard()
     {
         for (int i = 0; i < width; i++)
@@ -490,8 +453,7 @@ public class Board : MonoBehaviour
         
         return false;
     }
-
-
+    
     private IEnumerator FillBoardCo()
     {
         RefillBoard();
@@ -521,7 +483,6 @@ public class Board : MonoBehaviour
     
     }
 
-
     private void SwitchPieces(int column, int row, Vector2 direction)
     {
 
@@ -534,8 +495,7 @@ public class Board : MonoBehaviour
 
 
     }
-
-
+    
     private bool CheckForMatches()
     {
         for (int i = 0; i < width; i ++)
@@ -550,27 +510,24 @@ public class Board : MonoBehaviour
                         //Check if the dots do the right and two to the right exist.
                         if (allDots[i + 1, j] != null && allDots[i + 2, j] != null)
                         {
-                            if (allDots[i + 1, j].tag == allDots[i, j].tag && allDots[i + 2, j].tag == allDots[i, j].tag)
+                            if (allDots[i + 1, j].CompareTag(allDots[i, j].tag) && allDots[i + 2, j].CompareTag(allDots[i, j].tag))
                             {
                                 return true;
                             }
                         }
                     }
-                   
-
+                    
                     if(j < height - 2)
                     {
                         //Check if the dots above exist.
                         if (allDots[i, j + 1] != null && allDots[i, j + 2] != null)
                         {
-                            if (allDots[i, j + 1].tag == allDots[i, j].tag && allDots[i, j + 2].tag == allDots[i, j].tag)
+                            if (allDots[i, j + 1].CompareTag(allDots[i, j].tag) && allDots[i, j + 2].CompareTag(allDots[i, j].tag))
                             {
                                 return true;
                             }
                         }
                     }
-                   
-                
                 }
             }
         }
@@ -621,8 +578,7 @@ public class Board : MonoBehaviour
         }
         return true;
     }
-
-
+    
     private void ShuffleBoard()
     {
         //Create a list of game objects
@@ -676,15 +632,4 @@ public class Board : MonoBehaviour
             ShuffleBoard();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 }

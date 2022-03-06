@@ -13,8 +13,7 @@ public class BackgroundTile : MonoBehaviour
         goalManager = FindObjectOfType<GoalManager>();
         sprite = GetComponent<SpriteRenderer>();
     }
-
-
+    
     private void Update()
     {
         if(hitPoints<= 0)
