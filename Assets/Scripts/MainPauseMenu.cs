@@ -5,11 +5,7 @@ using UnityEngine.UI;
 public class MainPauseMenu : MonoBehaviour
 {
     public GameObject PauseMenuPanel;
-
-
-
-
-
+    
     public void OpenMenu()
     {
         PauseMenuPanel.SetActive(true);
@@ -22,12 +18,9 @@ public class MainPauseMenu : MonoBehaviour
         PauseMenuPanel.SetActive(false);
         Time.timeScale = 1f;
     }
-
-
+    
     public void QuitGame()
     {
         Application.Quit();
     }
-
-
 }

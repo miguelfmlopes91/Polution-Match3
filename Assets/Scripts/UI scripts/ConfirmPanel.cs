@@ -20,7 +20,8 @@ public class ConfirmPanel : MonoBehaviour
 
 
     public StarManager starManager;
-    void OnEnable()
+
+    private void OnEnable()
     {
         heartManager = FindObjectOfType<HeartManager>();
         gameData = FindObjectOfType<GameData>();
@@ -29,26 +30,18 @@ public class ConfirmPanel : MonoBehaviour
         LevelSetText();
     }
 
-    void LoadData()
+    private void LoadData()
     {
         if(gameData != null)
         {
             highScore = gameData.saveData.highScores[level - 1];
         }
     }
-    
-    void SetText()
+
+    private void SetText()
     {
         highScoreText.text = "" + highScore;
     }
-    
-    
-    void Update()
-    {
-        
-    }
-
-
 
     public void Cancel()
     {
@@ -65,9 +58,8 @@ public class ConfirmPanel : MonoBehaviour
         }
         
     }
-
-
-    void LevelSetText()
+    
+    private void LevelSetText()
     {
         LevelTextSetting.text = level.ToString();
         starManager.index = level -1;

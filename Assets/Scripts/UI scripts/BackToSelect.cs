@@ -14,16 +14,6 @@ public class BackToSelect : MonoBehaviour
     private HeartManager heartManager;
     public EndGameManager endgameManager;
     
-    void start()
-    {
-        endgameManager = FindObjectOfType<EndGameManager>();
-    }
-
-    
-
-   
-        
-    
     public void WinOk()
     {
         if(gameData != null)
@@ -34,12 +24,10 @@ public class BackToSelect : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad);
     }
     
-    
     public void LoseOK()
     {
         if (gameData != null)
         {
-           
             gameData.saveData.amountOfLives -= 1;
             gameData.Save();
 
@@ -47,30 +35,17 @@ public class BackToSelect : MonoBehaviour
         }
 
         SceneManager.LoadScene(sceneToLoad);
-
-        
-
-
     }
-
-
+    
     public void ActuallyNoThankYou()
     {
         SceneManager.LoadScene(sceneToLoad);
     }
-
-
-
-    void Start()
+    
+    private void Start()
     {
         gameData = FindObjectOfType<GameData>();
         board = FindObjectOfType<Board>();
         heartManager = FindObjectOfType<HeartManager>();
-    }
-
-    
-    void Update()
-    {
-        
     }
 }

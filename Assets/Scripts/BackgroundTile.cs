@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BackgroundTile : MonoBehaviour
 {
@@ -32,8 +30,8 @@ public class BackgroundTile : MonoBehaviour
         hitPoints -= damage;
         MakeLighter();
     }
-   
-    void MakeLighter()
+
+    private void MakeLighter()
     {
         //take the current color
         Color color = sprite.color;
@@ -41,6 +39,4 @@ public class BackgroundTile : MonoBehaviour
         float newAlpha = color.a * .5f;
         sprite.color = new Color(color.r, color.g, color.b, newAlpha);
     }
-
-
 }

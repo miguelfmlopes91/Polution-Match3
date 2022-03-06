@@ -16,11 +16,10 @@ public class LevelButton : MonoBehaviour
     public Text levelText;
     public int level;
     public GameObject confirmPanel;
-
-
+    
     private GameData gameData;
 
-    void Start()
+    private void Start()
     {
         gameData = FindObjectOfType<GameData>();
         buttonImage = GetComponent<Image>();
@@ -30,7 +29,7 @@ public class LevelButton : MonoBehaviour
         DecideSprite();
     }
 
-    void LoadData()
+    private void LoadData()
     {
         //Is gamedata present?
         if (gameData != null)
@@ -47,7 +46,7 @@ public class LevelButton : MonoBehaviour
         }
     }
 
-    void DecideSprite()
+    private void DecideSprite()
     {
         if (isActive)
         {
@@ -63,23 +62,14 @@ public class LevelButton : MonoBehaviour
         }
     }
 
-    void ShowLevel()
+    private void ShowLevel()
     {
         levelText.text = "" + level;
     }
-
-    void Update()
-    {
-        
-    }
-
+    
     public void ConfirmPanel(int level)
     {
         confirmPanel.GetComponent<ConfirmPanel>().level = level;
         confirmPanel.SetActive(true);
     }
-
-
-
-
 }

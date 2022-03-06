@@ -10,12 +10,12 @@ public class GoalPanel : MonoBehaviour
     public Text thisText;
     public string thisString;
 
-    void Start()
+    private void Start()
     {
         Setup();
     }
 
-    void Setup()
+    private void Setup()
     {
         thisImage.sprite = thisSprite;
         thisText.text = thisString;
