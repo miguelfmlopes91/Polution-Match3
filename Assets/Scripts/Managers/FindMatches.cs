@@ -241,12 +241,14 @@ public class FindMatches : MonoBehaviour
             for(int j = 0; j < board.height; j ++)
             {
                 //Check if that Piece exists
-                if (board.allDots[i, j] == null) continue;
+                var piece = board.allDots[i, j];
+                if (piece == null) continue;
                 //Check the Tag on that Dot
-                if(board.allDots[i, j].CompareTag(color))
+                if(piece.CompareTag(color))
                 {
                     //set that dot to be matched
-                    board.allDots[i, j].GetComponent<Dot>().isMatched = true;
+                    piece.GetComponent<Dot>().isMatched = true;
+                    currentMatches.Add(piece);
                 }
             }
         }

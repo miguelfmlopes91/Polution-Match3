@@ -183,13 +183,12 @@ public class Board : MonoBehaviour
                         dotToUse = Random.Range(0, dots.Length);
                         maxIterations++;
                     }
-                    maxIterations = 0;
-                    GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
+                    var dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
                     dot.GetComponent<Dot>().row = j;
                     dot.GetComponent<Dot>().column = i;
 
-                    dot.transform.parent = this.transform;
-                    dot.name = "(" + i + ", " + j + " )";
+                    dot.transform.parent = transform;
+                    dot.name = "(" + i + ", " + j + " ) - " + dot.tag;
                     allDots[i, j] = dot;
                 }
              
@@ -281,30 +280,20 @@ public class Board : MonoBehaviour
             {
                 //Make a color bomb
                 //Is the current dot matched
-                if(currentDot != null)
+                if (currentDot == null) return;
+                if (currentDot.isMatched && !currentDot.isColorBomb)
                 {
-                    if (currentDot.isMatched)
+                    currentDot.isMatched = false;
+                    currentDot.MakeColorBomb();
+                }
+                else
+                {
+                    if (currentDot.otherDot == null) return;
+                    Dot otherDot = currentDot.otherDot.GetComponent<Dot>();
+                    if (otherDot.isMatched && !otherDot.isColorBomb)
                     {
-                        if (!currentDot.isColorBomb)
-                        {
-                            currentDot.isMatched = false;
-                            currentDot.MakeColorBomb();
-                        }
-                    }
-                    else
-                    {
-                        if(currentDot.otherDot != null)
-                        {
-                            Dot otherDot = currentDot.otherDot.GetComponent<Dot>();
-                            if (otherDot.isMatched)
-                            {
-                                if (!otherDot.isColorBomb)
-                                {
-                                    otherDot.isMatched = false;
-                                    otherDot.MakeColorBomb();
-                                }
-                            }
-                        }
+                        otherDot.isMatched = false;
+                        otherDot.MakeColorBomb();
                     }
                 }
             }
@@ -312,30 +301,20 @@ public class Board : MonoBehaviour
             {
                 //Make a Adjacent bomb
                 //Is the current dot matched
-                if (currentDot != null)
+                if (currentDot == null) return;
+                if (currentDot.isMatched && !currentDot.isAdjacentBomb)
                 {
-                    if (currentDot.isMatched)
+                    currentDot.isMatched = false;
+                    currentDot.MakeAdjacentBomb();
+                }
+                else
+                {
+                    if (currentDot.otherDot == null) return;
+                    Dot otherDot = currentDot.otherDot.GetComponent<Dot>();
+                    if (otherDot.isMatched && !otherDot.isAdjacentBomb)
                     {
-                        if (!currentDot.isAdjacentBomb)
-                        {
-                            currentDot.isMatched = false;
-                            currentDot.MakeAdjacentBomb();
-                        }
-                    }
-                    else
-                    {
-                        if (currentDot.otherDot != null)
-                        {
-                            Dot otherDot = currentDot.otherDot.GetComponent<Dot>();
-                            if (otherDot.isMatched)
-                            {
-                                if (!otherDot.isAdjacentBomb)
-                                {
-                                    otherDot.isMatched = false;
-                                    otherDot.MakeAdjacentBomb();
-                                }
-                            }
-                        }
+                        otherDot.isMatched = false;
+                        otherDot.MakeAdjacentBomb();
                     }
                 }
             }
@@ -446,6 +425,8 @@ public class Board : MonoBehaviour
                     allDots[i, j] = piece;
                     piece.GetComponent<Dot>().row = j;
                     piece.GetComponent<Dot>().column = i;
+                    piece.transform.parent = transform;
+                    piece.name = "(" + i + ", " + j + " ) - " + piece.tag;
                 }
             }
         }
@@ -500,13 +481,6 @@ public class Board : MonoBehaviour
             }
            
         } while (MatchesInBoard());
-
-        if (CheckPiecesNull())
-        {
-            Debug.Log("OH DIABO");
-        }
-        
-        
         findMatches.currentMatches.Clear();
         currentDot = null;
         

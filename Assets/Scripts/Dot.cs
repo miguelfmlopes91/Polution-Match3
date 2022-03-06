@@ -104,22 +104,28 @@ public class Dot : MonoBehaviour
         {
             yield return new WaitForSeconds(SwapAnimationTime);
         }
+        
         if (isColorBomb)
         {
             //This Piece is a color bomb, and the other is the color to destroy
             findMatches.MatchPiecesOfColor(otherDot.tag);
             isMatched = true;
-        }else if (otherDot.GetComponent<Dot>().isColorBomb)
+            board.currentState = Gamestate.MatchesChecked;
+            yield break;
+
+        }
+        if (otherDot.GetComponent<Dot>().isColorBomb)
         {
             //The other piece is a color bomb, and this peice has the color to destroy
             findMatches.MatchPiecesOfColor(gameObject.tag);
             otherDot.GetComponent<Dot>().isMatched = true;
+            board.currentState = Gamestate.MatchesChecked;
+            yield break;
         }
-
-        board.currentState = Gamestate.CheckMatches;
-
-        yield return new WaitUntil(() => board.currentState != Gamestate.CheckMatches);
         
+        board.currentState = Gamestate.CheckMatches;
+        yield return new WaitUntil(() => board.currentState != Gamestate.CheckMatches);
+
         if (otherDot == null) yield break;
         if(!isMatched && !otherDot.GetComponent<Dot>().isMatched)
         {
@@ -235,8 +241,8 @@ public class Dot : MonoBehaviour
     {
         isColorBomb = true;
         GameObject color = Instantiate(ColorBomb, transform.position, Quaternion.identity);
-        color.transform.parent = this.transform;
-        this.gameObject.tag = "Color";
+        color.transform.parent = transform;
+        gameObject.tag = "Color";
 
     }
 
