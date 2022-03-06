@@ -18,12 +18,12 @@ public class FindMatches : MonoBehaviour
     }
     
     
-    private IEnumerable<GameObject> IsAdjacentBomb(Dot dot1, Dot dot2, Dot dot3)
+    private void IsAdjacentBomb(Dot dot1, Dot dot2, Dot dot3)
     {
-        var currentDots = new List<GameObject>();
         if (dot1.isAdjacentBomb)
         {
-            currentMatches.Union(GetAdjacentPieces(dot1.column, dot1.row));
+            var pieces = GetAdjacentPieces(dot1.column, dot1.row);
+            currentMatches.Union(pieces);
         }
 
         if (dot2.isAdjacentBomb)
@@ -35,15 +35,14 @@ public class FindMatches : MonoBehaviour
         {
             currentMatches.Union(GetAdjacentPieces(dot3.column, dot3.row));
         }
-        return currentDots;
     }
-
-
+    
     private void IsRowBomb(Dot dot1, Dot dot2, Dot dot3)
     {
         if (dot1.isRowBomb)
         {
-            currentMatches.Union(GetRowPieces(dot1.row));
+            var pieces = GetRowPieces(dot1.row);
+            currentMatches.Union(pieces);
         }
 
         if (dot2.isRowBomb)
@@ -61,7 +60,8 @@ public class FindMatches : MonoBehaviour
     {
         if (dot1.isColumnBomb)
         {
-            currentMatches.Union(GetColumnPieces(dot1.column));
+            var pieces = GetColumnPieces(dot1.column);
+            currentMatches.Union(pieces);
         }
 
         if (dot2.isColumnBomb)

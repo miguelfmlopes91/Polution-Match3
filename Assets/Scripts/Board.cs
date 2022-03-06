@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -221,9 +222,8 @@ public class Board : MonoBehaviour
         Dot firstPiece = findMatches.currentMatches[0].GetComponent<Dot>();
         if(firstPiece != null)
         {
-            foreach (GameObject currentPiece in findMatches.currentMatches)
+            foreach (var dot in findMatches.currentMatches.Select(currentPiece => currentPiece.GetComponent<Dot>()))
             {
-                Dot dot = currentPiece.GetComponent<Dot>();
                 if(dot.row == firstPiece.row)
                 {
                     numberHorizontal++;
@@ -233,7 +233,6 @@ public class Board : MonoBehaviour
                 {
                     numberVertical++;
                 }
-            
             }
         }
         return (numberVertical == 5 || numberHorizontal == 5);
@@ -316,44 +315,41 @@ public class Board : MonoBehaviour
     
     private void DestroyMatchesAt(int column, int row)
     {
-        if(allDots[column, row].GetComponent<Dot>().isMatched)
+        if (!allDots[column, row].GetComponent<Dot>().isMatched) return;
+        //How many elements are in the match pieces list from find matches
+        if(findMatches.currentMatches.Count >= 4)
         {
-            //How many elements are in the match pieces list from find matches
-            if(findMatches.currentMatches.Count >= 4)
-            {
-                CheckToMakeBombs();
-            }
-            
-            //Does a tile need to break?
-            if(breakableTiles[column, row]!=null)
-            {
-                //If it does give one damage
-                breakableTiles[column, row].TakeDamage(1);
-                if(breakableTiles[column, row].hitPoints <= 0)
-                {
-                    breakableTiles[column, row] = null;
-                }
-               
-            }
-            
-            
-            if(goalManager != null)
-            {
-                goalManager.CompareGoal(allDots[column, row].tag.ToString());
-                goalManager.UpdateGoal();
-            }
-            
-            //Does the sound manager exist?
-            if(soundManager != null)
-            {
-                soundManager.PlayRandomDestroyNoise();
-            }
-            GameObject particle =Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
-            Destroy(particle, .5f);
-            Destroy(allDots[column, row]);
-            scoreManager.IncreaseScore(basePieceValue * streakValue, scoreGoals);
-            allDots[column, row] = null;
+            CheckToMakeBombs();
         }
+            
+        //Does a tile need to break?
+        if(breakableTiles[column, row]!=null)
+        {
+            //If it does give one damage
+            breakableTiles[column, row].TakeDamage(1);
+            if(breakableTiles[column, row].hitPoints <= 0)
+            {
+                breakableTiles[column, row] = null;
+            }
+        }
+            
+        if(goalManager != null)
+        {
+            goalManager.CompareGoal(allDots[column, row].tag);
+            goalManager.UpdateGoal();
+        }
+            
+        //Does the sound manager exist?
+        if(soundManager != null)
+        {
+            soundManager.PlayRandomDestroyNoise();
+        }
+            
+        var particle = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
+        Destroy(particle, .5f);
+        Destroy(allDots[column, row]);
+        scoreManager.IncreaseScore(basePieceValue * streakValue, scoreGoals);
+        allDots[column, row] = null;
     }
 
     public void DestroyMatches()
@@ -582,7 +578,7 @@ public class Board : MonoBehaviour
     private void ShuffleBoard()
     {
         //Create a list of game objects
-        List<GameObject> newBoard = new List<GameObject>();
+        var newBoard = new List<GameObject>();
         //Add every piece to this list.
         for (int i = 0; i < width; i++)
         {
@@ -600,29 +596,27 @@ public class Board : MonoBehaviour
             for (int j = 0; j < height; j ++)
             {
                 //If this spot shouldn't be blank
-                if (!blankSpaces[i, j])
+                if (blankSpaces[i, j]) continue;
+                //Pick a random number
+                int pieceToUse = Random.Range(0, newBoard.Count);
+                    
+                //Assign the column to the piece.
+                int maxIterations = 0;
+                    
+                while (MatchesAt(i, j, newBoard[pieceToUse]) && maxIterations < 100)
                 {
-                    //Pick a random number
-                    int pieceToUse = Random.Range(0, newBoard.Count);
-                    
-                    //Assign the column to the piece.
-                    int maxIterations = 0;
-                    
-                    while (MatchesAt(i, j, newBoard[pieceToUse]) && maxIterations < 100)
-                    {
-                        pieceToUse = Random.Range(0, newBoard.Count);
-                        maxIterations++;
-                    }
-                    //Make a container for the piece.
-                    Dot piece = newBoard[pieceToUse].GetComponent<Dot>();
-                    piece.column = i;
-                    //Assign the row to the piece.
-                    piece.row = j;
-                    //Fill in the dots array with this new piece.
-                    allDots[i, j] = newBoard[pieceToUse];
-                    //Remove it from the list.
-                    newBoard.Remove(newBoard[pieceToUse]);
+                    pieceToUse = Random.Range(0, newBoard.Count);
+                    maxIterations++;
                 }
+                //Make a container for the piece.
+                Dot piece = newBoard[pieceToUse].GetComponent<Dot>();
+                piece.column = i;
+                //Assign the row to the piece.
+                piece.row = j;
+                //Fill in the dots array with this new piece.
+                allDots[i, j] = newBoard[pieceToUse];
+                //Remove it from the list.
+                newBoard.Remove(newBoard[pieceToUse]);
             }
         }
         //Check if its still deadlocked.
