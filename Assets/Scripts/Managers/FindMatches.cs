@@ -17,8 +17,7 @@ public class FindMatches : MonoBehaviour
     {
         if (dot1.isAdjacentBomb)
         {
-            var pieces = GetAdjacentPieces(dot1.column, dot1.row);
-            currentMatches.Union(pieces);
+            currentMatches.Union(GetAdjacentPieces(dot1.column, dot1.row));
         }
 
         if (dot2.isAdjacentBomb)
@@ -36,8 +35,7 @@ public class FindMatches : MonoBehaviour
     {
         if (dot1.isRowBomb)
         {
-            var pieces = GetRowPieces(dot1.row);
-            currentMatches.Union(pieces);
+            currentMatches.Union(GetRowPieces(dot1.row));
         }
 
         if (dot2.isRowBomb)
@@ -55,8 +53,7 @@ public class FindMatches : MonoBehaviour
     {
         if (dot1.isColumnBomb)
         {
-            var pieces = GetColumnPieces(dot1.column);
-            currentMatches.Union(pieces);
+            currentMatches.Union(GetColumnPieces(dot1.column));
         }
 
         if (dot2.isColumnBomb)
