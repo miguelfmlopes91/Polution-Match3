@@ -11,14 +11,13 @@ public class HintManager : MonoBehaviour
     public GameObject currentHint;
 
 
-    void Start()
+    private void Start()
     {
         board = FindObjectOfType<Board>();
         hintDelaySeconds = hintDelay;
     }
-
-   
-    void Update()
+    
+    private void Update()
     {
         hintDelaySeconds -= Time.deltaTime;
         if(hintDelaySeconds<= 0 && currentHint == null)
@@ -27,11 +26,9 @@ public class HintManager : MonoBehaviour
             hintDelaySeconds = hintDelay;
         }
     }
-
-
-
-    //First I want to find all possible matches on the board.
-    List<GameObject> FindAllMatches()
+    
+    //First find all possible matches on the board.
+    private List<GameObject> FindAllMatches()
     {
         List<GameObject> possibleMoves = new List<GameObject>();
         for (int i = 0; i < board.width; i++)
@@ -59,10 +56,11 @@ public class HintManager : MonoBehaviour
         }
         return possibleMoves;
     }
+    
     //Pick one of those matches randomly. 
-    GameObject PickOneRandomly()
+    private GameObject PickOneRandomly()
     {
-        List<GameObject> possibleMoves = new List<GameObject>();
+        List<GameObject> possibleMoves;
         possibleMoves = FindAllMatches();
         if(possibleMoves.Count > 0)
         {
@@ -71,6 +69,7 @@ public class HintManager : MonoBehaviour
         }
         return null;
     }
+    
     //Create the hint behind the chosen match.
     private void MarkHint()
     {
@@ -80,6 +79,7 @@ public class HintManager : MonoBehaviour
             currentHint = Instantiate(hintParticle, move.transform.position, Quaternion.identity);
         }
     }
+    
     //Destroy the hint.
     public void DestoryHint()
     {

@@ -33,6 +33,6 @@ public class FadePanelController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Board board = FindObjectOfType<Board>();
-        board.currentState = Gamestate.move;
+        board.currentState = Gamestate.Move;
     }
 }

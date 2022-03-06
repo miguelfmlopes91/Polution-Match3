@@ -1,16 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public enum Gamestate
 {
-    wait,
-    move,
-    win,
-    lose,
-    pause
+    Wait,
+    Move,
+    CheckMatches,
+    MatchesChecked,
+    Win,
+    Lose,
+    Pause,
+    Swapping,
+    None
 }
 
 public enum TileKind
@@ -20,7 +26,7 @@ public enum TileKind
     Normal
 }
 
-[System.Serializable]
+[Serializable]
 public class TileType
 {
     public int x;
@@ -35,7 +41,8 @@ public class Board : MonoBehaviour
     public int level;
 
 
-    public Gamestate currentState = Gamestate.move;
+    public Gamestate currentState = Gamestate.Move;
+    private Gamestate lastState = Gamestate.None;
 
     [Header("Board Dimenstions")]
     public int width;
@@ -97,11 +104,31 @@ public class Board : MonoBehaviour
         blankSpaces = new bool[width, height];
         allDots = new GameObject[width, height];
         SetUp();
-        currentState = Gamestate.pause;
+        currentState = Gamestate.Pause;
 
         FindObjectOfType<UiManager>().UpdateLevelText(level);
     }
-    
+
+    private void Update()
+    {
+        if (lastState != currentState)
+        {
+            Debug.Log($"Current State : {currentState.ToString()}");
+        }
+        if (currentState == Gamestate.CheckMatches)
+        {
+            findMatches.FindAllMatches();
+        }
+
+        if (currentState == Gamestate.MatchesChecked)
+        {
+            DestroyMatches();
+            currentState = Gamestate.Wait;
+        }
+
+        lastState = currentState; //debug use
+    }
+
     private void GenerateBlankSpaces()
     {
         for(int i = 0; i < boardLayout.Length; i++)
@@ -352,7 +379,7 @@ public class Board : MonoBehaviour
         allDots[column, row] = null;
     }
 
-    public void DestroyMatches()
+    private void DestroyMatches()
     {
         for (int i = 0; i < width; i++)
         {
@@ -362,14 +389,10 @@ public class Board : MonoBehaviour
                 {
                     DestroyMatchesAt(i, j);
                 }
-
-                
             }
         }
         findMatches.currentMatches.Clear();
         StartCoroutine(DecreaseRowCo());
-    
-    
     }
 
     private IEnumerator DecreaseRowCo()
@@ -460,7 +483,6 @@ public class Board : MonoBehaviour
             streakValue ++;
             DestroyMatches();
             yield return new WaitForSeconds(2 * refillDelay);
-            
         }
 
         findMatches.currentMatches.Clear();
@@ -473,10 +495,8 @@ public class Board : MonoBehaviour
             Debug.Log("DeadLocked ! ! !");
         }
         yield return new WaitForSeconds(refillDelay);
-        currentState = Gamestate.move;
+        currentState = Gamestate.Move;
         streakValue = 1;
-    
-    
     }
 
     private void SwitchPieces(int column, int row, Vector2 direction)

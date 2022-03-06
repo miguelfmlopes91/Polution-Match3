@@ -11,11 +11,6 @@ public class FindMatches : MonoBehaviour
     {
         board = FindObjectOfType<Board>();
     }
-
-    public void FindAllMatches()
-    {
-        StartCoroutine(FindAllMatchesCo());
-    }
     
     
     private void IsAdjacentBomb(Dot dot1, Dot dot2, Dot dot3)
@@ -91,9 +86,8 @@ public class FindMatches : MonoBehaviour
         
     }
 
-    private IEnumerator FindAllMatchesCo()
+    public void FindAllMatches()
     {
-        yield return new WaitForSeconds(.2f);
         for (int i = 0; i < board.width; i++)
         {
             for(int j = 0; j < board.height; j++)
@@ -142,6 +136,10 @@ public class FindMatches : MonoBehaviour
                 }
             }
         }
+
+        board.currentState = Gamestate.MatchesChecked;
+        Debug.Log($"Matches checked");
+
     }
 
     private IEnumerable<GameObject> GetAdjacentPieces(int column, int row)
